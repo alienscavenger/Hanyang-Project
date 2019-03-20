@@ -1,0 +1,7 @@
+﻿  Apriori.cpp
+d:\binus - it - slide\semester 6\data science\assignment1 - apriori\2019_ite4005_9018720198\apriori\apriori.cpp(312): warning C4018: '<=': signed/unsigned mismatch
+d:\binus - it - slide\semester 6\data science\assignment1 - apriori\2019_ite4005_9018720198\apriori\apriori.cpp(354): warning C4018: '<': signed/unsigned mismatch
+d:\binus - it - slide\semester 6\data science\assignment1 - apriori\2019_ite4005_9018720198\apriori\apriori.cpp(367): warning C4018: '<': signed/unsigned mismatch
+d:\binus - it - slide\semester 6\data science\assignment1 - apriori\2019_ite4005_9018720198\apriori\apriori.cpp(402): warning C4018: '<=': signed/unsigned mismatch
+d:\binus - it - slide\semester 6\data science\assignment1 - apriori\2019_ite4005_9018720198\apriori\apriori.cpp(461): warning C4018: '>': signed/unsigned mismatch
+  Apriori.vcxproj -> D:\BINUS - IT - SLIDE\Semester 6\Data Science\Assignment1 - Apriori\2019_ITE4005_9018720198\Apriori\Debug\Apriori.exe
