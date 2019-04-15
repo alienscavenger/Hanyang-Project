@@ -1,5 +1,3 @@
 ﻿  DecisionTree.cpp
-D:\BINUS - IT - SLIDE\Semester 6\Data Science\2019_ITE4005_9018720198\DecisionTree\DecisionTree.cpp(260): warning C4018: '<': signed/unsigned mismatch
-D:\BINUS - IT - SLIDE\Semester 6\Data Science\2019_ITE4005_9018720198\DecisionTree\DecisionTree.cpp(319): warning C4018: '<': signed/unsigned mismatch
-D:\BINUS - IT - SLIDE\Semester 6\Data Science\2019_ITE4005_9018720198\DecisionTree\DecisionTree.cpp(323): warning C4552: '-': result of expression not used
+D:\BINUS - IT - SLIDE\Semester 6\Data Science\2019_ITE4005_9018720198\DecisionTree\DecisionTree.cpp(338): warning C4018: '<': signed/unsigned mismatch
   DecisionTree.vcxproj -> D:\BINUS - IT - SLIDE\Semester 6\Data Science\2019_ITE4005_9018720198\DecisionTree\Debug\DecisionTree.exe
