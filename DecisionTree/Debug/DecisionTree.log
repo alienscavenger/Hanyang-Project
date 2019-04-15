@@ -1,3 +1,4 @@
-﻿  DecisionTree.cpp
-D:\BINUS - IT - SLIDE\Semester 6\Data Science\2019_ITE4005_9018720198\DecisionTree\DecisionTree.cpp(338): warning C4018: '<': signed/unsigned mismatch
-  DecisionTree.vcxproj -> D:\BINUS - IT - SLIDE\Semester 6\Data Science\2019_ITE4005_9018720198\DecisionTree\Debug\DecisionTree.exe
+﻿  dt.cpp
+D:\BINUS - IT - SLIDE\Semester 6\Data Science\2019_ITE4005_9018720198\DecisionTree\dt.cpp(375): warning C4018: '<': signed/unsigned mismatch
+D:\BINUS - IT - SLIDE\Semester 6\Data Science\2019_ITE4005_9018720198\DecisionTree\dt.cpp(451): warning C4018: '<': signed/unsigned mismatch
+  DecisionTree.vcxproj -> D:\BINUS - IT - SLIDE\Semester 6\Data Science\2019_ITE4005_9018720198\DecisionTree\Debug\dt.exe
