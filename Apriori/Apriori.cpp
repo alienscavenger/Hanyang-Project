@@ -1,4 +1,3 @@
-﻿#include <cstdio>
 #include <iostream>
 #include <iomanip>
 #include <fstream>
@@ -59,7 +58,7 @@ void scanFile()
 		}
 		database.push_back(dataCounter); // insert the counter
 	}
-	if(debugging) minSupport = 16; //DEBUG
+	if (debugging) minSupport = 16; //DEBUG
 	databaseSize = database.size();
 
 	map<int, int>::iterator it = counter.begin();
@@ -71,7 +70,7 @@ void scanFile()
 	//now, add k=1 item to the frequent pattern if it has sufficient support
 	while (it != counter.end())
 	{
-		float supp = ((it->second)*100.0f) / databaseSize; // in percentage
+		float supp = ((it->second) * 100.0f) / databaseSize; // in percentage
 		if (supp >= minSupport)
 		{
 			ItemSet iset = ItemSet(vector<int>{it->first}, 1); // create an object of ItemSet
@@ -123,7 +122,7 @@ void checkSuperset(int k)
 	}
 }
 
-void generateSuperset(map<string,int>* hashTable, vector<ItemSet>* candidate, vector<int>* lis1, vector<int>* lis2, int k)
+void generateSuperset(map<string, int> * hashTable, vector<ItemSet> * candidate, vector<int> * lis1, vector<int> * lis2, int k)
 {
 	// uses c++ STL instead of custom algorithm for the joining process
 	sort(lis1->begin(), lis1->end()); // ascending order
@@ -131,7 +130,7 @@ void generateSuperset(map<string,int>* hashTable, vector<ItemSet>* candidate, ve
 	vector<int> newList; // new candidate of size k
 	merge(lis1->begin(), lis1->end(), lis2->begin(), lis2->end(), back_inserter(newList));
 	sort(newList.begin(), newList.end()); // shouldn't make a difference
-	newList.erase(unique(newList.begin(), newList.end()), newList.end()); // delete the unique elements of the newList
+	newList.erase(unique(newList.begin(), newList.end()), newList.end()); // delete the duplicates elements of the newList
 
 	if (newList.size() == k) // only take it if the size the joining process is EXACTLY k
 							 // (or another way to see it, lis1 and lis2 should ONLY have k-2 item in common)
@@ -142,7 +141,7 @@ void generateSuperset(map<string,int>* hashTable, vector<ItemSet>* candidate, ve
 			hash += to_string(newList[i]); // create a hash key
 			hash += "#";
 		}
-		if (hashTable->count(hash)>0) return; // if hash already exist, return
+		if (hashTable->count(hash) > 0) return; // if hash already exist, return
 		else hashTable->insert(make_pair(hash, 1)); // else, add to the hash table counter
 		candidate->push_back(ItemSet(newList, k)); // push the joined set to the candidate vector
 	}
@@ -152,10 +151,10 @@ void generateCandidate(int k)
 {
 	candidate.clear();
 	int sz = frequent[k - 1].size(); // number of length k-1 pattern
-	
-	map<string, int>* hashTable = new map<string,int>(); // hash table so that we won't generate duplicate supersets
+
+	map<string, int>* hashTable = new map<string, int>(); // hash table so that we won't generate duplicate supersets
 	hashTable->clear();
-	
+
 	// generate superset by self-joining two frequent pattern of length k-1
 	for (int i = 0; i < sz - 1; i++)
 	{
@@ -196,7 +195,7 @@ void checkCandidate(int k) //count support for candidate, then add to frequent p
 	frequent.push_back(vector<ItemSet>()); // push a vector to the frequent vector, so we can access frequent[k]
 	for (unsigned i = 0; i < candidate.size(); i++)
 	{
-		float supp = (counter[i]*100.0f)/ databaseSize;
+		float supp = (counter[i] * 100.0f) / databaseSize;
 		if (supp >= minSupport)
 		{
 			frequent[k].push_back(candidate[i]); // add candidate pattern-i to the list of frequent pattern length-k
@@ -206,7 +205,7 @@ void checkCandidate(int k) //count support for candidate, then add to frequent p
 
 ////////////////////////////////////////////////////////////////
 
-float getSupport(vector<int>* items, int k)
+float getSupport(vector<int> * items, int k)
 {
 	int counter = 0;
 	for (int i = 0; i < databaseSize; i++)
@@ -222,10 +221,10 @@ float getSupport(vector<int>* items, int k)
 		}
 		if (foundAll) counter++; // if every item in the items vector is found on the transaction, increment the counter
 	}
-	return (float)(counter*100.0f) / databaseSize;
+	return (float)(counter * 100.0f) / databaseSize;
 }
 
-float getConfidence(vector<int>* left, vector<int>* right)
+float getConfidence(vector<int> * left, vector<int> * right)
 {
 	int containsLeft = 0;
 	int containsBoth = 0;
@@ -259,10 +258,10 @@ float getConfidence(vector<int>* left, vector<int>* right)
 		containsBoth++;
 	}
 	if (containsLeft == 0) return -1.0f; //DEBUG
-	return (containsBoth*100.0f) / containsLeft;
+	return (containsBoth * 100.0f) / containsLeft;
 }
 
-void printSet(vector<int>* set)
+void printSet(vector<int> * set)
 {
 	out << '{';
 	int sz = set->size();
@@ -284,7 +283,7 @@ void printSet(vector<int>* set)
 vector<int> item_set;
 vector<int> associative_item_set;
 
-void getCombination(int count, int curr, int combiSize, int k, float support, vector<int>* items)
+void getCombination(int count, int curr, int combiSize, int k, float support, vector<int> * items)
 {
 	if (count == combiSize) // if the combination size (of the left items) is equal to combiSize, then print the item set (left) and its association (right)
 	{
@@ -305,10 +304,10 @@ void getCombination(int count, int curr, int combiSize, int k, float support, ve
 	for (int i = curr; i < k; i++) // items size will be always k
 	{
 		item_set.push_back(items->at(i));
-		associative_item_set.erase(find(associative_item_set.begin(),associative_item_set.end(),items->at(i))); // works if there are no duplicate items
+		associative_item_set.erase(find(associative_item_set.begin(), associative_item_set.end(), items->at(i))); // works if there are no duplicate items
 		// associative_item_set is only used for printing the association (the items which are NOT in the item_set)
 
-		getCombination(count+1, i+1, combiSize, k, support,items); // nested loop recursion, with 'i' starting 1 value ahead of current one
+		getCombination(count + 1, i + 1, combiSize, k, support, items); // nested loop recursion, with 'i' starting 1 value ahead of current one
 
 		associative_item_set.push_back(items->at(i)); // push back the deleted item, it doesn't matter at what index, since during the erasing, it will uses 'find' anyway
 		item_set.pop_back(); // the last inserted item will always be at the top/last index
@@ -327,10 +326,10 @@ void getAssociative(int k) // k starts at 2
 		item_set.clear();
 		associative_item_set.clear();
 
-		for(int i=0; i<items->size(); i++) associative_item_set.push_back((*items)[i]); // put all item to the associative item set (right side)
+		for (int i = 0; i < items->size(); i++) associative_item_set.push_back((*items)[i]); // put all item to the associative item set (right side)
 		for (int j = 1; j < k; j++) // get combination of size 1 until (k-1) for the item set (left side)
 		{
-			getCombination(0,0, j, k, support,items); // k Choose 1 until k Choose (k-1)
+			getCombination(0, 0, j, k, support, items); // k Choose 1 until k Choose (k-1)
 		}
 	}
 }
@@ -358,8 +357,8 @@ int main(int argc, char* argv[])
 		checkCandidate(k);
 		getAssociative(k);
 	} while (frequent[k].size() > 1);
-			// The size of frequent[k] must be >1, so that at least
-			// there is a possibility to create (at least) one superset from it.
+	// The size of frequent[k] must be >1, so that at least
+	// there is a possibility to create (at least) one superset from it.
 	out.close();
 	return 0;
 }
