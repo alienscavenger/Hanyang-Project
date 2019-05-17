@@ -19,36 +19,36 @@ def loadFile(filename):
     return dataset
 
 #main function
-def find_cluster(maxcluster,eps,minpts,dataset,classifications,i,clusterid,neighbour_tree):
-    seeds = neighbour_tree.query_ball_point(dataset[i],eps) #return the index of all point within eps of dataset[i]
+def find_cluster(maxcluster,eps,minpts,dataset,classifications,i,clusterid,neighbor_tree):
+    seeds = neighbor_tree.query_ball_point(dataset[i],eps) #return the index of all point within eps of dataset[i]
     seeds.remove(i) #remove 'i' because query_ball_point finds all point that is within eps of dataset[i], including dataset[i] itself
     if len(seeds) < minpts:
-        classifications[i] = OUTLIER #set as outlier if didn't foud enough neighbour point
+        classifications[i] = OUTLIER #set as outlier if didn't foud enough neighbor point
         return False
     else:
         classifications[i] = clusterid #set current seed clusterid
 
         for seed_point in seeds:
             classifications[seed_point] = clusterid
-            neighbour = neighbour_tree.query_ball_point(dataset[seed_point],eps)
-            neighbour.remove(seed_point) #same reason as above
-            if len(neighbour) >= minpts:
-                for neighbour_point in neighbour:
-                    if classifications[neighbour_point] == UNCHECKED:
-                        classifications[neighbour_point] = clusterid #set neighbour point with the same cluster id
-                        seeds.append(neighbour_point) #add this to the seed list (don't change order with the above line)
-                    if classifications[neighbour_point] == OUTLIER:
-                        classifications[neighbour_point] = clusterid #set this point as the border
+            neighbor = neighbor_tree.query_ball_point(dataset[seed_point],eps)
+            neighbor.remove(seed_point) #same reason as above
+            if len(neighbor) >= minpts:
+                for neighbor_point in neighbor:
+                    if classifications[neighbor_point] == UNCHECKED:
+                        classifications[neighbor_point] = clusterid #set neighbor point with the same cluster id
+                        seeds.append(neighbor_point) #add this to the seed list (don't change order with the above line)
+                    if classifications[neighbor_point] == OUTLIER:
+                        classifications[neighbor_point] = clusterid #set this point as the border
         return True                    
 
 
-def dbscans(maxcluster,eps,minpts,dataset,neighbour_tree):
+def dbscans(maxcluster,eps,minpts,dataset,neighbor_tree):
     clusterid = 0
     n_data = dataset.shape[0]
     classifications = [UNCHECKED] * n_data
     for i in range(n_data):
         if classifications[i] == UNCHECKED:
-            if find_cluster(maxcluster,eps,minpts,dataset,classifications,i,clusterid,neighbour_tree):
+            if find_cluster(maxcluster,eps,minpts,dataset,classifications,i,clusterid,neighbor_tree):
                 clusterid = clusterid+1
 
     #cluster trimming if m>n
@@ -123,10 +123,10 @@ def main():
     eps = float(sys.argv[3])
     minpts = int(sys.argv[4])
     dataset = loadFile(filename)
-    neighbour_tree = spatial.cKDTree(dataset) #KDTree to find quickly find nearest neighbour within specific range
+    neighbor_tree = spatial.cKDTree(dataset) #KDTree to find quickly find nearest neighbor within specific range
 
     print('==start DBSCANS==')
-    n_clusters, classifications = dbscans(maxcluster,eps,minpts,dataset,neighbour_tree) #main function
+    n_clusters, classifications = dbscans(maxcluster,eps,minpts,dataset,neighbor_tree) #main function
     showClusterInfo(n_clusters,classifications)
     printClusterInfo(n_clusters,classifications,filename)
     
