@@ -1,5 +1,9 @@
 Data Science Assignment 1 - Apriori
+
 Data Science Assignment 2 - Decision Tree
+
+Data Science Assignment 3 - Clustering
+
 Melvin Ismanto
 9018720198
 
