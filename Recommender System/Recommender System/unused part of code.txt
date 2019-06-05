@@ -1,0 +1,66 @@
+maxi_users = trainset_df.user.unique().max() #max index for users
+maxi_items = trainset_df.item.unique().max()
+ratings = np.zeros((maxi_users, maxi_items)) #row = users, column = items
+
+if DEBUG:
+	n_users = trainset_df.user.unique().shape[0] #actual number of users
+	n_items = trainset_df.item.unique().shape[0]
+	print (str(n_users) + ' users')
+	print (str(n_items) + ' items')
+	print (str(maxi_users) + ' max user id')
+	print (str(maxi_items) + ' max item id')
+
+for row in trainset_df.itertuples():
+	#row = Pandas('Index','user','item','rating',timestamp')
+	user_id = row[1]-1 #base-0
+	item_id = row[2]-1
+	rating = row[3]
+	ratings[user_id, item_id] = rating
+
+print(ratings)
+
+if DEBUG:
+	print(ratings)
+	n_max_ratings = maxi_users * maxi_items
+	n_all_ratings = len(ratings.nonzero()[0])
+
+	#sparsity = The proportion of zero elements to non-zero elements
+	sparsity = n_max_ratings - n_all_ratings
+	print('Uninteresting item count: {}'.format(sparsity))
+	sparsity /= n_max_ratings
+	sparsity *= 100
+	density = 100 - sparsity
+	print('Sparsity: {:3.2f}%'.format(sparsity))
+	print('Density: {:3.2f}%'.format(density))
+
+#ratings type = numpy.ndarray
+ratings = [(str(user_id+1) + "\t" + str(item_id+1) + "\t" + str(int(ratings[user_id][item_id]))) \
+	for user_id in range(ratings.shape[0]) for item_id in range(ratings.shape[1]) \
+	if float(ratings[user_id][item_id])>0]
+
+##use the code below only to convert/split it to multidimensional array, not keeping it as \t separated string
+#ratings = [line.split('\t') for line in ratings]
+#for i in range(len(ratings)):
+#    ratings[i].append(trainset_df['timestamp'][i])
+
+for i in range(len(ratings)):
+	ratings[i] += "\t" + str(trainset_df['timestamp'][i]) +"\n"
+temp = ''.join(ratings)
+
+#trainset_df2 = pd.DataFrame(ratings, columns=names) #this is apparently not the same as using .read_csv method below (worse accuracy)    
+
+import sys
+if sys.version_info[0] < 3: #python 2
+	from StringIO import StringIO
+else: #python 3
+	from io import StringIO
+buffer = StringIO(temp)
+trainset_df2 = pd.read_csv(buffer,sep="\t", header=None, names=names)
+
+if DEBUG:
+	print(trainset_df)
+	print("after injection")
+	print(trainset_df2)
+	print(pd.concat([trainset_df,trainset_df2]).drop_duplicates(keep=False)) #check difference
+
+trainset_df = trainset_df2

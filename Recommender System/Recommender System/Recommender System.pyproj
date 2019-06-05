@@ -12,7 +12,7 @@
     <Name>Recommender System</Name>
     <RootNamespace>Recommender System</RootNamespace>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <CommandLineArguments>u1.base u1.test</CommandLineArguments>
+    <CommandLineArguments>u2.base u2.test</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
